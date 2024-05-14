@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.sql.rowset.serial.SerialBlob;
 import java.math.BigDecimal;
 import java.sql.Blob;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -31,5 +32,10 @@ public class RoomServiceImpl implements IRoomService {
             room.setPhoto(photoBlob);
         }
         return roomRepository.save(room);
+    }
+
+    @Override
+    public List<String> getAllRoomTypes() {
+        return roomRepository.findDistinctRoomTypes();
     }
 }
