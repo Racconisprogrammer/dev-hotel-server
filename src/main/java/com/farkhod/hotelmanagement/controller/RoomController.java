@@ -54,6 +54,9 @@ public class RoomController {
         return roomService.getAllRoomTypes();
     }
 
+
+
+    @GetMapping("/all-rooms")
     public ResponseEntity<List<RoomResponse>> getAllRooms() {
         List<Room> rooms = roomService.getAllRooms();
         List<RoomResponse> roomResponses = new ArrayList<>();
@@ -73,11 +76,11 @@ public class RoomController {
     @SneakyThrows
     public RoomResponse getRoomResponse(Room room) {
         List<BookedRoom> bookings = getAllBookingsByRoomId(room.getId());
-        List<BookedRoomResponse> bookedRoomResponses = bookings
-                .stream()
-                .map(booking-> new BookedRoomResponse(booking.getBookingId(),
-                        booking.getCheckInDate(), booking.getCheckOutDate(),
-                        booking.getBookingConfirmationCode())).toList();
+//        List<BookedRoomResponse> bookedRoomResponses = bookings
+//                .stream()
+//                .map(booking-> new BookedRoomResponse(booking.getBookingId(),
+//                        booking.getCheckInDate(), booking.getCheckOutDate(),
+//                        booking.getBookingConfirmationCode())).toList();
         byte[] photoBytes = null;
         Blob photoBlob = room.getPhoto();
         if (photoBlob != null) {
@@ -91,8 +94,7 @@ public class RoomController {
                 room.getRoomType(),
                 room.getRoomPrice(),
                 room.isBooked(),
-                photoBytes,
-                bookedRoomResponses);
+                photoBytes);
     }
 
     private List<BookedRoom> getAllBookingsByRoomId(Long roomId) {
